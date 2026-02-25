@@ -1,3 +1,4 @@
+'''
 flowchart TB
   Internet([INTERNET]) --> WAN[WAN (NAT)<br/>OPNsense em0<br/>10.0.2.15]
   WAN --> FW[OPNsense Firewall/Router]
@@ -13,3 +14,4 @@ flowchart TB
   end
 
   FW -. "DHCP Relay" .-> DC1
+'''
