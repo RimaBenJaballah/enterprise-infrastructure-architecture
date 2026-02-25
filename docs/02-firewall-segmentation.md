@@ -138,12 +138,5 @@ Rules applied on IT_NET (and HR_NET if needed):
 
 ---
 
-## Security Notes (Phase 1 Gaps)
-
-- **No default-deny east/west policy** — internal segments 
-  trust each other implicitly until Phase 2
-- **No IDS/IPS** — lateral traffic passes undetected
-- **FTP cleartext** — credentials and files exposed on the wire
-- **No rule logging** — no audit trail of connections
 
 *All of the above are addressed in Phase 2.*
