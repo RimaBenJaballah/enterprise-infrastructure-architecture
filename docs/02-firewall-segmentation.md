@@ -136,7 +136,4 @@ Rules applied on IT_NET (and HR_NET if needed):
 | FTP Control | TCP | 10.10.30.20 (FILE1) | 21 |
 | FTP Data | TCP | 10.10.30.20 (FILE1) | FTP_PASSIVE |
 
----
 
-
-*All of the above are addressed in Phase 2.*
