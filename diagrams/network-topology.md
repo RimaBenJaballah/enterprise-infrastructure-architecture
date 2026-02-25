@@ -1,8 +1,6 @@
 flowchart TB
   Internet([INTERNET]) --> WAN[WAN (NAT)<br/>OPNsense em0<br/>10.0.2.15]
-
   WAN --> FW[OPNsense Firewall/Router]
-
   FW --> HR[HR_NET<br/>10.10.10.0/24<br/>GW: 10.10.10.1]
   FW --> IT[IT_NET<br/>10.10.20.0/24<br/>GW: 10.10.20.1]
   FW --> GUEST[GUEST_NET<br/>10.10.40.0/24<br/>GW: 10.10.40.1]
