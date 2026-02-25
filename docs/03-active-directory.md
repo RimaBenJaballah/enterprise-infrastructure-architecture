@@ -151,21 +151,4 @@ server on HR/IT/GUEST interfaces and enable **DHCP relay**
 pointing to DC1 — so a single centralized server handles 
 all IP assignment across all segments.
 
----
 
-## Security Notes (Phase 1 Gaps)
-
-- **Weak passwords** — `user@123` is intentional for lab 
-  usability; no password complexity policy enforced yet
-- **No account lockout policy** — brute-force attempts 
-  go unchecked
-- **No MFA** — single-factor authentication on all accounts 
-  including admins
-- **No tiered admin model** — Admin.IT uses the same account 
-  for daily tasks and privileged operations
-- **No AD CS / PKI** — nothing is certificate-authenticated; 
-  services rely on password-based auth only
-- **NTLM not restricted** — Kerberos-only enforcement 
-  not applied yet
-
-*All of the above are addressed in Phase 2.*
