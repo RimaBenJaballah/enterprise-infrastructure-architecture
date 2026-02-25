@@ -222,22 +222,4 @@ OPNsense rules were also added
 FTP traffic from IT_NET and HR_NET to FILE1 only — 
 scoped by destination IP, not just port.
 
----
 
-## Security Notes (Phase 1 Gaps)
-
-- **FTP runs on port 21 — cleartext** — credentials 
-  and file contents are transmitted unencrypted and 
-  are sniffable on the network. Upgrade to FTPS (TLS) 
-  is planned for Phase 2
-- **Basic authentication over FTP** — AD passwords 
-  exposed in cleartext during the FTP handshake
-- **SMB signing not enforced** — shares are 
-  vulnerable to NTLM relay attacks
-- **Roaming profiles over unencrypted SMB** — 
-  profile data including cached settings transferred 
-  without encryption
-- **No file access auditing** — who accessed or 
-  modified what in the shares is not logged
-
-*All of the above are addressed in Phase 2.*
