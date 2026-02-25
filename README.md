@@ -159,7 +159,7 @@ Phase 2 will harden the baseline with identity + policy-driven controls:
 
 ## 📁 Repository Structure
 ```
-enterprise-it-infrastructure-lab/
+enterprise-infrastructure-architecture/
 ├── README.md
 ├── docs/
 │   ├── 01-network-architecture.md
