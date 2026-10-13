@@ -41,11 +41,7 @@ server-targeted GPOs apply correctly.
 **Role installed:** File and Storage Services → 
 File and iSCSI Services → File Server
 
-Adding the role formally is a professional habit — 
-the server can technically share folders without it, 
-but the role enables proper management through 
-Server Manager and makes the server's purpose explicit 
-in the infrastructure.
+The server can share folders without it, but the role enables management through Server Manager and makes the server's purpose explicit.
 
 ---
 
@@ -61,8 +57,7 @@ Three shares created under `C:\Shares\`:
 
 ### Permissions Model
 
-A deliberate two-layer permission model was applied — 
-the same approach used in production environments:
+Two-layer permission model:
 
 **Share permissions (broad):**  
 Set to `Authenticated Users = Full Control` on all shares.  
@@ -113,8 +108,7 @@ follow them — desktop, documents, settings,
 application configurations. Every change they make 
 is written back to the file server on logout.
 
-This simulates real enterprise mobility and is a 
-detail that goes well beyond basic lab setups.
+
 
 ### Setup on FILE1
 
@@ -151,14 +145,9 @@ Applied to all HR and IT users.
 
 ## DFS — Distributed File System
 
-DFS was enabled across DC1 and DC2 to provide 
-**file redundancy** for shared resources. 
+DFS replication was set up between DC1 and DC2 to provide **file redundancy**. 
 
-If FILE1 or DC1 becomes unavailable, files replicated 
-through DFS remain accessible through DC2. 
-This reflects real enterprise thinking — 
-critical shared data should never have a single point 
-of failure.
+If DC1 becomes unavailable, files replicated through DFS stay accessible through DC2.
 
 ---
 

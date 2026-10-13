@@ -60,10 +60,7 @@ movement is so easy after an initial compromise.
 
 ### GUEST_NET — Isolated Internet-Only Access
 
-The GUEST rule set is where deliberate firewall thinking 
-starts. Guests need internet access but must be completely 
-blind to the internal network. This required **4 explicit 
-rules in strict order:**
+Guests need internet access but no visibility into the internal network. This takes **4 explicit rules in strict order:**
 
 | # | Action | Protocol | Destination | Port | Purpose |
 |---|--------|----------|-------------|------|---------|
@@ -108,9 +105,7 @@ This two-hop flow requires two explicit rules:
 | Source | This Firewall |
 | Destination | 10.10.30.10 / Port 67 |
 
-A detail that catches many people off guard: the 
-firewall's own forwarded traffic is subject to its 
-own rules. Without Rule 2, the relay silently fails 
+The firewall's own forwarded traffic is still subject to its rules. Without Rule 2, the relay silently fails 
 even though the service is enabled.
 
 ---

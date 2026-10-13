@@ -1,7 +1,7 @@
 # Firewall — OPNsense Configuration
 
 ## Interface Assignments
-All 6 network adapters assigned and named in OPNsense. (SOC-NET and ADMIN_NET were used in phase two of this project )
+All network adapters assigned and named in OPNsense (SOC-NET and ADMIN_NET were added later for Phase 2).
 
 ![Interface Assignments](img/fw-interfaces.png)
 

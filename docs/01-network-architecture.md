@@ -96,7 +96,7 @@ This is a simple but effective isolation layer.
 
 ## Topology Diagram
 
-*(See `/diagrams/network-topology.png`)*
+*(See [`diagrams/network-topology.md`](../diagrams/network-topology.md))*
 ```
                         [ INTERNET ]
                               |

@@ -1,33 +1,21 @@
-# 🏢 Enterprise IT Infrastructure Lab — Phase 1: Baseline
+# Enterprise IT Infrastructure Lab — Phase 1: Baseline
 
-> **"You can't secure what you don't understand."**  
-> This project builds a realistic company IT infrastructure — 
-> intentionally mirroring the misconfigurations and weak practices 
-> found in real enterprises — as a foundation for 
-> **Phase 2: Zero Trust hardening.**
+> A company IT infrastructure built from scratch, with the
+> misconfigurations and weak practices common in real enterprises,
+> as the baseline for **Phase 2: Zero Trust hardening.**
 
 ---
 
-## 🎯 Project Goal
+## Project Goal
 
-Most cybersecurity labs start with attacking or defending an 
-already-built environment. This project takes a different approach:
-
-**I built the company first.**
-
-From scratch. The network, the servers, the identity system, 
-the file sharing, the remote access — everything a real IT 
-department would deploy. And like many real companies, this 
-infrastructure was built prioritizing *functionality over security*, 
-leaving behind the exact kinds of vulnerabilities that make 
-enterprises targets.
+Instead of attacking or defending an environment someone else built, I built the company first: the network, the servers, identity, and file sharing. Like many real companies, it was built for *functionality over security*, which leaves the gaps listed below.
 
 Phase 2 will layer a full Zero Trust architecture on top of this, 
 turning every weakness listed here into a hardened control.
 
 ---
 
-## 🗺️ Infrastructure Overview
+## Infrastructure Overview
 
 A multi-segment enterprise network running on VirtualBox + OPNsense, 
 with a full Windows Server environment behind it.
@@ -52,40 +40,40 @@ with a full Windows Server environment behind it.
 
 ---
 
-## 🔧 What Was Built
+## What Was Built
 
-### 🔥 Firewall — OPNsense
+### Firewall — OPNsense
 - Full routing between all 4 segments + WAN
 - Each segment on a **dedicated adapter** (no VLAN tagging — 
   physical isolation in VirtualBox)
 - DHCP relay configured so centralized DHCP on DC1 
   serves HR, IT, and GUEST across segments
-- Basic rule sets per segment (detailed in `/docs/02-firewall.md`)
+- Basic rule sets per segment (detailed in [`docs/02-firewall-segmentation.md`](docs/02-firewall-segmentation.md))
 
-### 🪪 Identity — Active Directory
+### Identity — Active Directory
 - **Domain:** `company.local`
 - **DC1:** AD DS + DNS + DHCP — primary
 - **DC2:** AD DS + DNS — replicates from DC1 for high availability
-- **DFS** enabled across DC1 and DC2 for file redundancy
-- Clean OU structure built for GPO-readiness:
+- **DFS** replication between DC1 and DC2
+- OU structure under `COMPANY` (Users, Computers, Servers, Groups), ready for GPOs
 - Security Groups: `HR_Users`, `IT_Admins`, `VPN_Users`, `FTP_Users`
 - Users assigned to groups with role-based access in mind
 
-### 📁 File Server — FILE1 (10.10.30.20)
+### File Server — FILE1 (10.10.30.20)
 - Domain-joined Windows Server in SERVER_NET
 - SMB shares: **HR**, **IT**, **Public**
 - Permissions controlled at NTFS level using AD groups
-  (inheritance disabled — clean, explicit permissions per share)
+  (inheritance disabled, explicit permissions per share)
 - **Roaming Profiles** — user desktops/settings/documents 
   follow them across any domain PC via `\\FILE1\RoamingProfiles\%username%`
 
-### 📤 FTP Server — on FILE1 (IIS)
+### FTP Server — on FILE1 (IIS)
 - FTP site serving `C:\FTP\Shared`
 - AD group authentication — only `FTP_Users` can connect
 - Passive mode configured (ports 50000–50100)
 - Firewall rules allow FTP access from IT_NET and HR_NET only
 
-### 🌐 DHCP Architecture
+### DHCP Architecture
 - Single DHCP server on DC1 (centralized management)
 - OPNsense acts as **DHCP relay** for cross-segment IP assignment
 - Scopes: HR / IT / GUEST with correct gateways and DNS per segment
@@ -94,7 +82,7 @@ with a full Windows Server environment behind it.
 
 ---
 
-## ⚠️ Baseline Security Gaps (Intentional)
+## Baseline Security Gaps (Intentional)
 
 This Phase 1 build prioritizes enterprise functionality first, 
 leaving common "pre-hardening" gaps that Phase 2 will close:
@@ -116,7 +104,7 @@ leaving common "pre-hardening" gaps that Phase 2 will close:
 
 ---
 
-## 🔜 Phase 2 — Zero Trust Hardening (Next)
+## Phase 2 — Zero Trust Hardening
 
 Phase 2 will harden the baseline with identity + policy-driven controls:
 
@@ -131,11 +119,11 @@ Phase 2 will harden the baseline with identity + policy-driven controls:
 - **SIEM + auditing** — firewall logs, AD events, 
   file access telemetry
 
-→ Phase 2 repo link will be added once published.
+
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 | Tool                | Role                           |
 |---------------------|--------------------------------|
@@ -150,14 +138,14 @@ Phase 2 will harden the baseline with identity + policy-driven controls:
 
 ---
 
-## 📐 Diagrams & Screenshots
+## Diagrams & Screenshots
 
-- Network topology: `/diagrams/network-topology.png`
-- Full screenshots by component: `/screenshots/`
+- Network topology: [`diagrams/network-topology.md`](diagrams/network-topology.md)
+- Screenshots by component: [firewall](screenshots/firewall.md), [Active Directory](screenshots/active-directory.md), [file server](screenshots/file-server.md), [FTP](screenshots/ftp.md)
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 ```
 enterprise-infrastructure-architecture/
 ├── README.md
@@ -168,10 +156,11 @@ enterprise-infrastructure-architecture/
 │   ├── 04-dhcp-infrastructure.md
 │   └── 05-file-ftp-servers.md
 ├── diagrams/
-│   └── network-topology.png
+│   └── network-topology.md
 └── screenshots/
-    ├── firewall/
-    ├── active-directory/
-    ├── file-server/
-    └── ftp/
+    ├── firewall.md
+    ├── active-directory.md
+    ├── file-server.md
+    ├── ftp.md
+    └── img/
 ```

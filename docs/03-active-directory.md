@@ -4,11 +4,7 @@
 
 Active Directory is the identity backbone of this infrastructure. 
 Every user, every computer, every permission, and every service 
-authentication flows through it. Getting this layer right is what 
-separates a real enterprise environment from a basic lab — so this 
-phase was built with production habits in mind: clean OU structure, 
-role-based group membership, redundant domain controllers, and 
-proper delegation of services.
+authentication flows through it. It was built with production habits: a clean OU structure, role-based group membership, redundant domain controllers, and proper delegation of services.
 
 **Domain:** `company.local`
 
@@ -16,9 +12,7 @@ proper delegation of services.
 
 ## Domain Controllers
 
-Rather than running a single DC (which most labs do), 
-this infrastructure runs **two domain controllers** — 
-mirroring real enterprise high-availability design.
+The domain runs **two domain controllers** for high availability.
 
 | Server | IP | Roles |
 |--------|-----|-------|
@@ -34,9 +28,7 @@ of failure for identity services.
 IP management in one place keeps scope administration clean 
 and avoids split-scope conflicts in a lab environment.
 
-**DFS (Distributed File System)** was enabled across both 
-DCs to provide file redundancy — ensuring shared resources 
-remain available even if one server becomes unreachable.
+**DFS (Distributed File System)** replication was enabled between both DCs, so replicated folders stay available if one DC goes down.
 
 ---
 
@@ -107,11 +99,7 @@ Created inside `COMPANY\Groups`:
 | VPN_Users | Global / Security | Authorized remote access (Phase 2) |
 | FTP_Users | Global / Security | FTP service access on FILE1 |
 
-Using security groups rather than assigning permissions 
-directly to users is a fundamental AD best practice — 
-adding or removing a user from a group instantly 
-updates all their access across every service that 
-references that group.
+Permissions are assigned to groups, never directly to users. Adding or removing a user from a group updates their access on every service that uses that group.
 
 ---
 
@@ -144,7 +132,7 @@ assign IPs), three scopes were created:
 **GUEST scope exception:** DNS is deliberately set to the 
 OPNsense gateway instead of DC1/DC2 — guests can resolve 
 public internet names but cannot resolve any internal 
-hostname. A small but meaningful isolation detail.
+hostname.
 
 OPNsense was then configured to disable its built-in DHCP 
 server on HR/IT/GUEST interfaces and enable **DHCP relay** 

@@ -2,16 +2,7 @@
 
 ## Overview
 
-Most basic labs run DHCP directly on the firewall — one server, 
-one segment, no complexity. This infrastructure takes a more 
-realistic enterprise approach: **a centralized DHCP server on DC1 
-serving multiple network segments through OPNsense acting as a 
-DHCP relay.**
-
-This matters because in a real company, you want IP address 
-management centralized — one place to see all leases, all scopes, 
-all reservations. Not a separate DHCP service running per interface 
-on the firewall.
+**A centralized DHCP server on DC1 serves all client segments through OPNsense acting as a DHCP relay.** This keeps IP management in one place (all leases, scopes and reservations) instead of a separate DHCP service per firewall interface.
 
 ---
 
@@ -30,7 +21,7 @@ on the firewall.
 [ Client receives IP ]
 ```
 
-The key detail here: DHCP clients send a **broadcast** — 
+DHCP clients send a **broadcast** — 
 they don't know where the server is. Broadcasts don't cross 
 router boundaries. The relay solves this by having OPNsense 
 intercept the broadcast on each client-facing interface and 
@@ -61,8 +52,7 @@ Relay enabled on interfaces: **OPT1 (HR), OPT2 (IT), OPT4 (GUEST)**
 
 ## Firewall Rules for Relay
 
-This is where most people get caught — enabling the relay 
-service is not enough. The firewall must explicitly allow 
+Enabling the relay service is not enough. The firewall must explicitly allow 
 the two-hop traffic flow, because **OPNsense applies its 
 own rules to its own forwarded traffic.**
 
@@ -96,9 +86,7 @@ so the relay service can pick it up.
 Allows OPNsense to forward the relayed request to DC1. 
 Without this rule the relay silently fails — 
 the service shows as running but no client ever gets an IP. 
-This two-rule chain is a detail that reflects a real 
-understanding of how stateful firewalls interact with 
-relay services.
+
 
 ---
 
